@@ -11,13 +11,37 @@ export default function ProposalSection({ prospect, onUpdated }) {
   const generate = async () => {
     setGenerating(true);
     const proposal = await base44.integrations.Core.InvokeLLM({
-      prompt: `Write a professional, persuasive AI optimization consulting proposal addressed to ${prospect.business_name}, a ${prospect.industry} business located in ${prospect.location}.
+      prompt: `You are Skyrey, an AI optimization consultant, creative strategist, and business automation builder at REYTRINIDADco in Jacksonville, Florida.
+
+Research ${prospect.business_name} (a ${prospect.industry} business in ${prospect.location}${prospect.website ? `, website: ${prospect.website}` : ""}) online, then write a direct, high-converting AI Business Leak Audit proposal addressed to them.
 
 Company background: ${prospect.description}
-Their current gaps: ${(prospect.gaps || []).join("; ")}
-Recommended AI solutions: ${(prospect.ai_opportunities || []).join("; ")}
+Known weaknesses: ${(prospect.gaps || []).join("; ")}
+Recommended solutions: ${(prospect.ai_opportunities || []).join("; ")}
 
-The proposal is from REYTRINIDADco, an AI optimization consulting company. Structure it in markdown with: a brief personalized intro showing you understand their business, a "Current Challenges" section, a "Proposed AI Solutions" section with concrete deliverables mapped to each challenge, an "Expected Impact" section with realistic estimates, a simple 3-phase timeline, and a warm closing with next steps signed "REYTRINIDADco". Keep it concise and client-friendly, around 500 words. Do not include pricing, do not include a date, and do not include any contact information (the email adds those automatically).`
+Do NOT sound desperate, generic, overly polite, or like a normal agency. The tone is confident, sharp, and practical — a consultant who researched them, found the leaks, and knows how to fix them. This is a diagnosis, not a pitch. Never beg ("I would love to work with you").
+
+The proposal must tell the owner:
+1. I researched your company.
+2. Here are the specific weaknesses and risks in your current digital presence.
+3. These weaknesses could cause you to lose leads, repeat customers, revenue, and market share.
+4. Even if you already use AI, you can still fall behind if the AI is not connected to a real revenue system — having AI is not the same as having a system that makes you money.
+5. Here is the exact AI-powered system I would build to fix the leaks.
+
+Do not insult the business or make fake claims. Never say they will definitely fail — use language like "could cause you to lose leads", "may be leaving money on the table", "creates a gap competitors can take advantage of", "your current system does not appear built to".
+
+Structure in markdown:
+1. A strong, direct opening line ("I researched your business and I'm going to be direct.")
+2. "What I Noticed" — specific observations about their company
+3. "Failure Risk Score" — rate their current digital system X/10 risk level with a one-line reason (base it on their gaps; frame it as the system underperforming, not the business being bad)
+4. "The Biggest Risks" — bulleted list of the leaks and why each one costs money
+5. "What I Would Build" — the AI-powered lead capture + follow-up + automation system, with concrete deliverables mapped to each risk
+6. "Why This Matters Financially" — the money logic
+7. A clear call to action, signed "Skyrey — REYTRINIDADco"
+
+Around 500-600 words. Do not include pricing, a date, or contact information (the email adds those automatically).`,
+      add_context_from_internet: true,
+      model: "gemini_3_flash"
     });
     await base44.entities.Prospect.update(prospect.id, {
       proposal,
