@@ -17,7 +17,7 @@ Company background: ${prospect.description}
 Their current gaps: ${(prospect.gaps || []).join("; ")}
 Recommended AI solutions: ${(prospect.ai_opportunities || []).join("; ")}
 
-Structure it in markdown with: a brief personalized intro showing you understand their business, a "Current Challenges" section, a "Proposed AI Solutions" section with concrete deliverables mapped to each challenge, an "Expected Impact" section with realistic estimates, a simple 3-phase timeline, and a warm closing with next steps. Keep it concise and client-friendly, around 500 words. Do not include pricing.`
+The proposal is from REYTRINIDADco, an AI optimization consulting company. Structure it in markdown with: a brief personalized intro showing you understand their business, a "Current Challenges" section, a "Proposed AI Solutions" section with concrete deliverables mapped to each challenge, an "Expected Impact" section with realistic estimates, a simple 3-phase timeline, and a warm closing with next steps signed "REYTRINIDADco". Keep it concise and client-friendly, around 500 words. Do not include pricing, do not include a date, and do not include any contact information (the email adds those automatically).`
     });
     await base44.entities.Prospect.update(prospect.id, {
       proposal,

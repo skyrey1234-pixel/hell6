@@ -1,5 +1,10 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import { createMimeMessage } from 'npm:mimetext@3.0.24';
+import { marked } from 'npm:marked@12.0.2';
+
+const LOGO_URL = 'https://media.base44.com/images/public/6a4874ff15694fac2c53ae2f/568856756_logoooooooooo.png';
+const PORTFOLIO_URL = 'https://skyreyport-pgwsqsg8.manus.space/';
+const COMPANY_NAME = 'REYTRINIDADco';
 
 Deno.serve(async (req) => {
   try {
@@ -21,29 +26,52 @@ Deno.serve(async (req) => {
     });
     const profile = await profileRes.json();
 
+    const sentDate = new Date().toLocaleDateString('en-US', {
+      timeZone: 'America/New_York', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    const demoUrl = prospect.demo_html
+      ? `https://base44.app/api/apps/${Deno.env.get('BASE44_APP_ID')}/functions/viewDemo?pid=${prospectId}`
+      : null;
+
+    const proposalHtml = marked.parse(prospect.proposal);
+
+    const htmlBody = `
+<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;">
+  <div style="max-width:640px;margin:0 auto;background:#ffffff;">
+    <div style="background:#000000;text-align:center;padding:28px 20px;">
+      <img src="${LOGO_URL}" alt="${COMPANY_NAME}" width="110" style="display:block;margin:0 auto 10px;" />
+      <div style="color:#d4af37;font-size:20px;font-weight:bold;letter-spacing:3px;">${COMPANY_NAME}</div>
+    </div>
+    <div style="padding:32px 36px;color:#1f2937;font-size:15px;line-height:1.65;">
+      <p style="color:#6b7280;font-size:13px;margin:0 0 20px;">${sentDate}</p>
+      ${proposalHtml}
+      ${demoUrl ? `
+      <div style="text-align:center;margin:32px 0;">
+        <a href="${demoUrl}" style="background:#d4af37;color:#000000;text-decoration:none;font-weight:bold;font-size:15px;padding:14px 32px;border-radius:8px;display:inline-block;">View Your Free Demo Website</a>
+        <p style="color:#6b7280;font-size:12px;margin-top:12px;">We built a live demo to show what a modern, AI-enhanced website could look like for ${prospect.business_name}.</p>
+      </div>` : ''}
+    </div>
+    <div style="background:#000000;text-align:center;padding:22px 20px;color:#9ca3af;font-size:13px;">
+      <div style="color:#d4af37;font-weight:bold;margin-bottom:6px;">${COMPANY_NAME}</div>
+      <a href="${PORTFOLIO_URL}" style="color:#d4af37;text-decoration:underline;">View My Portfolio</a>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    const plainBody = `${sentDate}\n\n${prospect.proposal}` +
+      (demoUrl ? `\n\nView your free demo website: ${demoUrl}` : '') +
+      `\n\n—\n${COMPANY_NAME}\nPortfolio: ${PORTFOLIO_URL}`;
+
     const msg = createMimeMessage();
     msg.setSender(profile.emailAddress);
     msg.setTo(prospect.contact_email);
     msg.setSubject(`AI Optimization Proposal for ${prospect.business_name}`);
-
-    let body = prospect.proposal;
-    if (prospect.demo_html) {
-      body += '\n\n---\nP.S. We built a free demo website to show what a modern, AI-enhanced online presence could look like for ' + prospect.business_name + '. It\'s attached to this email — just open the HTML file in any browser.';
-    }
-    msg.addMessage({ contentType: 'text/plain', data: body });
-
-    if (prospect.demo_html) {
-      const bytes = new TextEncoder().encode(prospect.demo_html);
-      let binary = '';
-      for (let i = 0; i < bytes.length; i += 8192) {
-        binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
-      }
-      msg.addAttachment({
-        filename: prospect.business_name.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '-demo.html',
-        contentType: 'text/html',
-        data: btoa(binary)
-      });
-    }
+    msg.addMessage({ contentType: 'text/plain', data: plainBody });
+    msg.addMessage({ contentType: 'text/html', data: htmlBody });
 
     const sendRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
       method: 'POST',
