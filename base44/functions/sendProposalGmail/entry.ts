@@ -12,7 +12,7 @@ Deno.serve(async (req) => {
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { prospectId } = await req.json();
+    const { prospectId, templateId } = await req.json();
     if (!prospectId) return Response.json({ error: 'prospectId is required' }, { status: 400 });
 
     const prospect = await base44.entities.Prospect.get(prospectId);
@@ -34,7 +34,26 @@ Deno.serve(async (req) => {
       ? `https://base44.app/api/apps/${Deno.env.get('BASE44_APP_ID')}/functions/viewDemo?pid=${prospectId}`
       : null;
 
-    const proposalHtml = marked.parse(prospect.proposal);
+    let template = null;
+    if (templateId) {
+      template = await base44.entities.EmailTemplate.get(templateId);
+    }
+
+    const fill = (str) => String(str || '')
+      .replaceAll('{{business_name}}', prospect.business_name || '')
+      .replaceAll('{{industry}}', prospect.industry || '')
+      .replaceAll('{{location}}', prospect.location || '')
+      .replaceAll('{{proposal}}', prospect.proposal || '')
+      .replaceAll('{{demo_link}}', demoUrl || '')
+      .replaceAll('{{portfolio_link}}', PORTFOLIO_URL)
+      .replaceAll('{{company_name}}', COMPANY_NAME)
+      .replaceAll('{{date}}', sentDate);
+
+    const subject = template
+      ? fill(template.subject)
+      : `AI Optimization Proposal for ${prospect.business_name}`;
+    const bodyMarkdown = template ? fill(template.body) : prospect.proposal;
+    const proposalHtml = marked.parse(bodyMarkdown);
 
     const htmlBody = `
 <!DOCTYPE html>
@@ -62,14 +81,14 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-    const plainBody = `${sentDate}\n\n${prospect.proposal}` +
+    const plainBody = `${sentDate}\n\n${bodyMarkdown}` +
       (demoUrl ? `\n\nView your free demo website: ${demoUrl}` : '') +
       `\n\n—\n${COMPANY_NAME}\nPortfolio: ${PORTFOLIO_URL}`;
 
     const msg = createMimeMessage();
     msg.setSender(profile.emailAddress);
     msg.setTo(prospect.contact_email);
-    msg.setSubject(`AI Optimization Proposal for ${prospect.business_name}`);
+    msg.setSubject(subject);
     msg.addMessage({ contentType: 'text/plain', data: plainBody });
     msg.addMessage({ contentType: 'text/html', data: htmlBody });
 
@@ -84,7 +103,56 @@ Deno.serve(async (req) => {
     }
 
     await base44.entities.Prospect.update(prospectId, { status: 'proposal_sent' });
-    return Response.json({ success: true, sentFrom: profile.emailAddress });
+
+    // Log the send to the Google Sheets proposal log (non-fatal if it fails)
+    let logged = false;
+    try {
+      const sheetsConn = await base44.asServiceRole.connectors.getConnection('googlesheets');
+      const sheetsToken = sheetsConn.accessToken;
+      const sheetsHeaders = { Authorization: `Bearer ${sheetsToken}`, 'Content-Type': 'application/json' };
+
+      const settings = await base44.asServiceRole.entities.AppSetting.filter({ key: 'proposal_log_sheet_id' });
+      let sheetId = settings.length > 0 ? settings[0].value : null;
+
+      if (!sheetId) {
+        const createRes = await fetch('https://sheets.googleapis.com/v4/spreadsheets', {
+          method: 'POST',
+          headers: sheetsHeaders,
+          body: JSON.stringify({ properties: { title: 'REYTRINIDADco Proposal Log' } })
+        });
+        const created = await createRes.json();
+        if (!createRes.ok) throw new Error(JSON.stringify(created));
+        sheetId = created.spreadsheetId;
+        await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:append?valueInputOption=USER_ENTERED`, {
+          method: 'POST',
+          headers: sheetsHeaders,
+          body: JSON.stringify({ values: [['Date Sent', 'Company', 'Contact Email', 'Phone', 'Location', 'Industry', 'Template', 'Demo Link']] })
+        });
+        await base44.asServiceRole.entities.AppSetting.create({ key: 'proposal_log_sheet_id', value: sheetId });
+      }
+
+      const appendRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:append?valueInputOption=USER_ENTERED`, {
+        method: 'POST',
+        headers: sheetsHeaders,
+        body: JSON.stringify({
+          values: [[
+            sentDate,
+            prospect.business_name || '',
+            prospect.contact_email || '',
+            prospect.phone || '',
+            prospect.location || '',
+            prospect.industry || '',
+            template ? template.name : 'Full Proposal',
+            demoUrl || ''
+          ]]
+        })
+      });
+      logged = appendRes.ok;
+    } catch (_logError) {
+      logged = false;
+    }
+
+    return Response.json({ success: true, sentFrom: profile.emailAddress, logged });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
