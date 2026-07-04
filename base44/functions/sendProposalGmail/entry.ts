@@ -25,7 +25,25 @@ Deno.serve(async (req) => {
     msg.setSender(profile.emailAddress);
     msg.setTo(prospect.contact_email);
     msg.setSubject(`AI Optimization Proposal for ${prospect.business_name}`);
-    msg.addMessage({ contentType: 'text/plain', data: prospect.proposal });
+
+    let body = prospect.proposal;
+    if (prospect.demo_html) {
+      body += '\n\n---\nP.S. We built a free demo website to show what a modern, AI-enhanced online presence could look like for ' + prospect.business_name + '. It\'s attached to this email — just open the HTML file in any browser.';
+    }
+    msg.addMessage({ contentType: 'text/plain', data: body });
+
+    if (prospect.demo_html) {
+      const bytes = new TextEncoder().encode(prospect.demo_html);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i += 8192) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+      }
+      msg.addAttachment({
+        filename: prospect.business_name.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '-demo.html',
+        contentType: 'text/html',
+        data: btoa(binary)
+      });
+    }
 
     const sendRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
       method: 'POST',
