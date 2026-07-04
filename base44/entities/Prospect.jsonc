@@ -53,6 +53,9 @@
     "proposal": {
       "type": "string"
     },
+    "sms_pitch": {
+      "type": "string"
+    },
     "demo_html": {
       "type": "string"
     },

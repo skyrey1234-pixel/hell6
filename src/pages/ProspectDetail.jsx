@@ -9,6 +9,7 @@ import DemoSection from "@/components/prospects/DemoSection";
 import EnrichContact from "@/components/prospects/EnrichContact";
 import NotesSection from "@/components/prospects/NotesSection";
 import SendToClient from "@/components/prospects/SendToClient";
+import TextPitch from "@/components/prospects/TextPitch";
 
 export default function ProspectDetail() {
   const { id } = useParams();
@@ -68,6 +69,7 @@ export default function ProspectDetail() {
         {prospect.description && <p className="text-slate-300 leading-relaxed mb-8">{prospect.description}</p>}
 
         <SendToClient prospect={prospect} onUpdated={load} />
+        <TextPitch prospect={prospect} onUpdated={load} />
         <EnrichContact prospect={prospect} onUpdated={load} />
         <GapsOpportunities prospect={prospect} />
         <ProposalSection prospect={prospect} onUpdated={load} />
