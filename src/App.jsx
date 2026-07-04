@@ -18,6 +18,7 @@ import ProspectDetail from '@/pages/ProspectDetail';
 import Pipeline from '@/pages/Pipeline';
 import Templates from '@/pages/Templates';
 import Reports from '@/pages/Reports';
+import Instagram from '@/pages/Instagram';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -56,6 +57,7 @@ const AuthenticatedApp = () => {
         <Route path="/pipeline" element={<Pipeline />} />
         <Route path="/templates" element={<Templates />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/instagram" element={<Instagram />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

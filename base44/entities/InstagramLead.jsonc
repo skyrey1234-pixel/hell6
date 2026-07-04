@@ -1,0 +1,50 @@
+{
+  "name": "InstagramLead",
+  "type": "object",
+  "properties": {
+    "handle": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "niche": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "string"
+    },
+    "followers": {
+      "type": "string"
+    },
+    "what_they_sell": {
+      "type": "string"
+    },
+    "profile_url": {
+      "type": "string"
+    },
+    "dm_pitch": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "dm_sent",
+        "replied",
+        "won",
+        "lost"
+      ],
+      "default": "new"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "handle"
+  ]
+}

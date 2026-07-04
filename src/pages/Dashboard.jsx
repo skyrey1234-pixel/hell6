@@ -3,7 +3,7 @@ import { base44 } from "@/api/base44Client";
 import SearchForm from "@/components/prospects/SearchForm";
 import ProspectCard from "@/components/prospects/ProspectCard";
 import KanbanBoard from "@/components/prospects/KanbanBoard";
-import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3 } from "lucide-react";
+import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3, Instagram as InstagramIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
@@ -82,6 +82,9 @@ For each business provide: name, industry, full address, phone number if known, 
               <Sparkles className="w-4 h-4" /> AI Consulting Prospector
             </div>
             <div className="flex gap-2">
+              <Link to="/instagram" className="flex items-center gap-2 text-sm text-slate-300 hover:text-pink-400 border border-slate-700 hover:border-pink-500/40 rounded-xl px-4 py-2 transition-colors">
+                <InstagramIcon className="w-4 h-4" /> Instagram
+              </Link>
               <Link to="/reports" className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 border border-slate-700 hover:border-amber-500/40 rounded-xl px-4 py-2 transition-colors">
                 <BarChart3 className="w-4 h-4" /> Reports
               </Link>
