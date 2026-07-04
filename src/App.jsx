@@ -16,6 +16,7 @@ import ResetPassword from '@/pages/ResetPassword';
 import Dashboard from '@/pages/Dashboard';
 import ProspectDetail from '@/pages/ProspectDetail';
 import Pipeline from '@/pages/Pipeline';
+import Templates from '@/pages/Templates';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -52,6 +53,7 @@ const AuthenticatedApp = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/prospect/:id" element={<ProspectDetail />} />
         <Route path="/pipeline" element={<Pipeline />} />
+        <Route path="/templates" element={<Templates />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

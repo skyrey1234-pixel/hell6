@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { Rocket, Loader2, Check } from "lucide-react";
 
 export default function SendToClient({ prospect, onUpdated }) {
   const [email, setEmail] = useState(prospect.contact_email || "");
+  const [templates, setTemplates] = useState([]);
+  const [templateId, setTemplateId] = useState("");
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    base44.entities.EmailTemplate.list("-updated_date", 100).then(setTemplates);
+  }, []);
 
   if (!prospect.proposal || !prospect.demo_html) return null;
 
@@ -17,7 +23,7 @@ export default function SendToClient({ prospect, onUpdated }) {
       if (email !== prospect.contact_email) {
         await base44.entities.Prospect.update(prospect.id, { contact_email: email });
       }
-      await base44.functions.invoke("sendProposalGmail", { prospectId: prospect.id });
+      await base44.functions.invoke("sendProposalGmail", { prospectId: prospect.id, templateId: templateId || null });
       await onUpdated();
       setSent(true);
     } catch (e) {
@@ -32,9 +38,17 @@ export default function SendToClient({ prospect, onUpdated }) {
         <Rocket className="w-4 h-4" /> Ready to send
       </div>
       <p className="text-xs text-slate-400 mb-4">
-        The proposal and demo site are ready. One click emails the full proposal with the demo website attached, straight from your Gmail.
+        Pick a template, confirm the email, and one click sends the branded proposal with the live demo link from your Gmail.
       </p>
       <div className="flex flex-wrap items-center gap-2">
+        <select
+          value={templateId}
+          onChange={(e) => { setTemplateId(e.target.value); setSent(false); }}
+          className="bg-[#0B0E14] border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500/50"
+        >
+          <option value="">Full Proposal (default)</option>
+          {templates.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+        </select>
         <input
           type="email"
           value={email}

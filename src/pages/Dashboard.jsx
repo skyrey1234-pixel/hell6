@@ -3,7 +3,7 @@ import { base44 } from "@/api/base44Client";
 import SearchForm from "@/components/prospects/SearchForm";
 import ProspectCard from "@/components/prospects/ProspectCard";
 import KanbanBoard from "@/components/prospects/KanbanBoard";
-import { Sparkles, KanbanSquare, LayoutGrid, Columns3 } from "lucide-react";
+import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
@@ -81,9 +81,14 @@ For each business provide: name, industry, full address, phone number if known, 
             <div className="flex items-center gap-2 text-amber-400 text-sm font-medium tracking-widest uppercase">
               <Sparkles className="w-4 h-4" /> AI Consulting Prospector
             </div>
-            <Link to="/pipeline" className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 border border-slate-700 hover:border-amber-500/40 rounded-xl px-4 py-2 transition-colors">
-              <KanbanSquare className="w-4 h-4" /> Pipeline
-            </Link>
+            <div className="flex gap-2">
+              <Link to="/templates" className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 border border-slate-700 hover:border-amber-500/40 rounded-xl px-4 py-2 transition-colors">
+                <LayoutTemplate className="w-4 h-4" /> Templates
+              </Link>
+              <Link to="/pipeline" className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 border border-slate-700 hover:border-amber-500/40 rounded-xl px-4 py-2 transition-colors">
+                <KanbanSquare className="w-4 h-4" /> Pipeline
+              </Link>
+            </div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Find your next client.</h1>
           <p className="text-slate-400 mt-3 max-w-xl">Discover local businesses that need AI optimization, see exactly what they're lacking, and generate proposals and demos in one click.</p>
