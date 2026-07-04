@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import ProspectRow from "@/components/prospects/ProspectRow";
+import SendAllProposals from "@/components/prospects/SendAllProposals";
 import { ArrowLeft, KanbanSquare } from "lucide-react";
 
 export default function Pipeline() {
@@ -32,9 +33,12 @@ export default function Pipeline() {
         <Link to="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-amber-400 transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" /> Back to search
         </Link>
-        <div className="flex items-center gap-2 mb-8">
-          <KanbanSquare className="w-6 h-6 text-amber-400" />
-          <h1 className="text-3xl font-bold tracking-tight">Prospect Pipeline</h1>
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex items-center gap-2">
+            <KanbanSquare className="w-6 h-6 text-amber-400" />
+            <h1 className="text-3xl font-bold tracking-tight">Prospect Pipeline</h1>
+          </div>
+          <SendAllProposals prospects={prospects} onDone={load} />
         </div>
 
         {loading ? (
