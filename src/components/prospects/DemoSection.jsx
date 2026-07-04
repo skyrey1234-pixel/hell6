@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { MonitorSmartphone, Loader2, ExternalLink } from "lucide-react";
+import { MonitorSmartphone, Loader2, ExternalLink, Download } from "lucide-react";
 
 export default function DemoSection({ prospect, onUpdated }) {
   const [generating, setGenerating] = useState(false);
@@ -37,6 +37,15 @@ Return ONLY the raw HTML starting with <!DOCTYPE html>. No markdown, no code fen
     window.open(URL.createObjectURL(blob), "_blank");
   };
 
+  const download = () => {
+    const blob = new Blob([prospect.demo_html], { type: "text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${prospect.business_name.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-demo.html`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
   return (
     <div className="bg-[#131824] border border-slate-800 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
@@ -44,6 +53,11 @@ Return ONLY the raw HTML starting with <!DOCTYPE html>. No markdown, no code fen
           <MonitorSmartphone className="w-4 h-4" /> Demo Website
         </h2>
         <div className="flex gap-2">
+          {prospect.demo_html && (
+            <button onClick={download} className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 border border-slate-700 rounded-lg px-3 py-1.5 transition-colors">
+              <Download className="w-3 h-3" /> Download
+            </button>
+          )}
           {prospect.demo_html && (
             <button onClick={openFullscreen} className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 border border-slate-700 rounded-lg px-3 py-1.5 transition-colors">
               <ExternalLink className="w-3 h-3" /> Open full screen

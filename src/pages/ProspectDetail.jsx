@@ -6,6 +6,8 @@ import StatusBadge from "@/components/prospects/StatusBadge";
 import GapsOpportunities from "@/components/prospects/GapsOpportunities";
 import ProposalSection from "@/components/prospects/ProposalSection";
 import DemoSection from "@/components/prospects/DemoSection";
+import EnrichContact from "@/components/prospects/EnrichContact";
+import NotesSection from "@/components/prospects/NotesSection";
 
 export default function ProspectDetail() {
   const { id } = useParams();
@@ -64,9 +66,11 @@ export default function ProspectDetail() {
 
         {prospect.description && <p className="text-slate-300 leading-relaxed mb-8">{prospect.description}</p>}
 
+        <EnrichContact prospect={prospect} onUpdated={load} />
         <GapsOpportunities prospect={prospect} />
         <ProposalSection prospect={prospect} onUpdated={load} />
         <DemoSection prospect={prospect} onUpdated={load} />
+        <NotesSection key={prospect.notes || "notes"} prospect={prospect} onUpdated={load} />
       </div>
     </div>
   );

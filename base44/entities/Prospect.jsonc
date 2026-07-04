@@ -54,6 +54,18 @@
     },
     "demo_html": {
       "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "linkedin_url": {
+      "type": "string"
     }
   },
   "required": [

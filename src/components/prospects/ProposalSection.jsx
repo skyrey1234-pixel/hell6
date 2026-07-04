@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import ReactMarkdown from "react-markdown";
 import { FileText, Loader2, Copy, Check } from "lucide-react";
+import EmailProposalButton from "@/components/prospects/EmailProposalButton";
 
 export default function ProposalSection({ prospect, onUpdated }) {
   const [generating, setGenerating] = useState(false);
@@ -39,6 +40,7 @@ Structure it in markdown with: a brief personalized intro showing you understand
           <FileText className="w-4 h-4" /> Proposal
         </h2>
         <div className="flex gap-2">
+          {prospect.proposal && <EmailProposalButton prospect={prospect} onUpdated={onUpdated} />}
           {prospect.proposal && (
             <button onClick={copy} className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 border border-slate-700 rounded-lg px-3 py-1.5 transition-colors">
               {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />} {copied ? "Copied" : "Copy"}
