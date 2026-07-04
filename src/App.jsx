@@ -15,6 +15,7 @@ import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import Dashboard from '@/pages/Dashboard';
 import ProspectDetail from '@/pages/ProspectDetail';
+import Pipeline from '@/pages/Pipeline';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -50,6 +51,7 @@ const AuthenticatedApp = () => {
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/prospect/:id" element={<ProspectDetail />} />
+        <Route path="/pipeline" element={<Pipeline />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

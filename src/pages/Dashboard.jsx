@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import SearchForm from "@/components/prospects/SearchForm";
 import ProspectCard from "@/components/prospects/ProspectCard";
-import { Sparkles } from "lucide-react";
+import { Sparkles, KanbanSquare } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [prospects, setProspects] = useState([]);
@@ -69,8 +70,13 @@ For each business provide: name, industry, full address, phone number if known, 
     <div className="min-h-screen bg-[#0B0E14] text-slate-100">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-10">
-          <div className="flex items-center gap-2 text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">
-            <Sparkles className="w-4 h-4" /> AI Consulting Prospector
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2 text-amber-400 text-sm font-medium tracking-widest uppercase">
+              <Sparkles className="w-4 h-4" /> AI Consulting Prospector
+            </div>
+            <Link to="/pipeline" className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 border border-slate-700 hover:border-amber-500/40 rounded-xl px-4 py-2 transition-colors">
+              <KanbanSquare className="w-4 h-4" /> Pipeline
+            </Link>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Find your next client.</h1>
           <p className="text-slate-400 mt-3 max-w-xl">Discover local businesses that need AI optimization, see exactly what they're lacking, and generate proposals and demos in one click.</p>
