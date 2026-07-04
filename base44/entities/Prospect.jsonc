@@ -1,0 +1,62 @@
+{
+  "name": "Prospect",
+  "type": "object",
+  "properties": {
+    "business_name": {
+      "type": "string"
+    },
+    "industry": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ai_opportunities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "opportunity_score": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "proposal_sent",
+        "demo_created",
+        "won",
+        "lost"
+      ],
+      "default": "new"
+    },
+    "proposal": {
+      "type": "string"
+    },
+    "demo_html": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "business_name"
+  ]
+}
