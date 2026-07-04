@@ -3,6 +3,7 @@ import { base44 } from "@/api/base44Client";
 import SearchForm from "@/components/prospects/SearchForm";
 import ProspectCard from "@/components/prospects/ProspectCard";
 import KanbanBoard from "@/components/prospects/KanbanBoard";
+import ProspectFilters from "@/components/prospects/ProspectFilters";
 import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3, Instagram as InstagramIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -11,6 +12,13 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
   const [view, setView] = useState("cards");
+  const [industryFilter, setIndustryFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("score");
+
+  const industries = [...new Set(prospects.map((p) => p.industry).filter(Boolean))].sort();
+  const visibleProspects = prospects
+    .filter((p) => industryFilter === "all" || p.industry === industryFilter)
+    .sort((a, b) => sortBy === "score" ? (b.opportunity_score || 0) - (a.opportunity_score || 0) : 0);
 
   const handleStatusChange = async (id, status) => {
     setProspects((prev) => prev.map((p) => (p.id === id ? { ...p, status } : p)));
@@ -110,7 +118,14 @@ For each business provide: name, industry, full address, phone number if known, 
           <div className="text-center py-20 text-slate-500">No prospects yet — run a search above to find local businesses.</div>
         ) : (
           <div className="mt-10">
-            <div className="flex justify-end mb-5">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+              <ProspectFilters
+                industries={industries}
+                industry={industryFilter}
+                onIndustryChange={setIndustryFilter}
+                sortBy={sortBy}
+                onSortChange={setSortBy}
+              />
               <div className="inline-flex border border-slate-700 rounded-xl overflow-hidden">
                 <button
                   onClick={() => setView("cards")}
@@ -128,10 +143,10 @@ For each business provide: name, industry, full address, phone number if known, 
             </div>
             {view === "cards" ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {prospects.map((p) => <ProspectCard key={p.id} prospect={p} />)}
+                {visibleProspects.map((p) => <ProspectCard key={p.id} prospect={p} />)}
               </div>
             ) : (
-              <KanbanBoard prospects={prospects} onStatusChange={handleStatusChange} />
+              <KanbanBoard prospects={visibleProspects} onStatusChange={handleStatusChange} />
             )}
           </div>
         )}
