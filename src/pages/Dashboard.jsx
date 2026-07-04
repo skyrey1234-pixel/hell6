@@ -2,13 +2,20 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import SearchForm from "@/components/prospects/SearchForm";
 import ProspectCard from "@/components/prospects/ProspectCard";
-import { Sparkles, KanbanSquare } from "lucide-react";
+import KanbanBoard from "@/components/prospects/KanbanBoard";
+import { Sparkles, KanbanSquare, LayoutGrid, Columns3 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [prospects, setProspects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
+  const [view, setView] = useState("cards");
+
+  const handleStatusChange = async (id, status) => {
+    setProspects((prev) => prev.map((p) => (p.id === id ? { ...p, status } : p)));
+    await base44.entities.Prospect.update(id, { status });
+  };
 
   const loadProspects = async () => {
     const data = await base44.entities.Prospect.list("-created_date", 100);
@@ -91,8 +98,30 @@ For each business provide: name, industry, full address, phone number if known, 
         ) : prospects.length === 0 ? (
           <div className="text-center py-20 text-slate-500">No prospects yet — run a search above to find local businesses.</div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-            {prospects.map((p) => <ProspectCard key={p.id} prospect={p} />)}
+          <div className="mt-10">
+            <div className="flex justify-end mb-5">
+              <div className="inline-flex border border-slate-700 rounded-xl overflow-hidden">
+                <button
+                  onClick={() => setView("cards")}
+                  className={`flex items-center gap-1.5 text-xs px-3 py-1.5 transition-colors ${view === "cards" ? "bg-amber-400 text-slate-950 font-semibold" : "text-slate-400 hover:text-slate-200"}`}
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" /> Cards
+                </button>
+                <button
+                  onClick={() => setView("board")}
+                  className={`flex items-center gap-1.5 text-xs px-3 py-1.5 transition-colors ${view === "board" ? "bg-amber-400 text-slate-950 font-semibold" : "text-slate-400 hover:text-slate-200"}`}
+                >
+                  <Columns3 className="w-3.5 h-3.5" /> Board
+                </button>
+              </div>
+            </div>
+            {view === "cards" ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {prospects.map((p) => <ProspectCard key={p.id} prospect={p} />)}
+              </div>
+            ) : (
+              <KanbanBoard prospects={prospects} onStatusChange={handleStatusChange} />
+            )}
           </div>
         )}
       </div>
