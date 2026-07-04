@@ -6,19 +6,14 @@ export default function SendAllProposals({ prospects, onDone }) {
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState(null);
 
-  const ready = prospects.filter((p) => p.proposal && p.contact_email && p.status !== "proposal_sent" && p.status !== "won" && p.status !== "lost");
+  const ready = prospects.filter((p) => p.proposal && p.contact_email && !["proposal_sent", "replied", "won", "lost"].includes(p.status));
 
   const sendAll = async () => {
     setSending(true);
     setResult(null);
     let sent = 0;
     for (const p of ready) {
-      await base44.integrations.Core.SendEmail({
-        to: p.contact_email,
-        subject: `AI Optimization Proposal for ${p.business_name}`,
-        body: p.proposal
-      });
-      await base44.entities.Prospect.update(p.id, { status: "proposal_sent" });
+      await base44.functions.invoke("sendProposalGmail", { prospectId: p.id });
       sent++;
     }
     await onDone();

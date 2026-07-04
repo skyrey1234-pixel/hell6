@@ -43,6 +43,7 @@
       "enum": [
         "new",
         "proposal_sent",
+        "replied",
         "demo_created",
         "won",
         "lost"
@@ -65,6 +66,12 @@
       "type": "string"
     },
     "linkedin_url": {
+      "type": "string"
+    },
+    "last_reply": {
+      "type": "string"
+    },
+    "last_reply_date": {
       "type": "string"
     }
   },

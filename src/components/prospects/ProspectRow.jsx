@@ -4,7 +4,8 @@ import { Trash2, ExternalLink } from "lucide-react";
 
 const STATUSES = [
   { value: "new", label: "New" },
-  { value: "proposal_sent", label: "Proposal Ready" },
+  { value: "proposal_sent", label: "Proposal Sent" },
+  { value: "replied", label: "Replied" },
   { value: "demo_created", label: "Demo Ready" },
   { value: "won", label: "Won" },
   { value: "lost", label: "Lost" }

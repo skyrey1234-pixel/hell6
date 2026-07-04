@@ -13,12 +13,8 @@ export default function EmailProposalButton({ prospect, onUpdated }) {
     setSending(true);
     setError(null);
     try {
-      await base44.integrations.Core.SendEmail({
-        to: email,
-        subject: `AI Optimization Proposal for ${prospect.business_name}`,
-        body: prospect.proposal
-      });
-      await base44.entities.Prospect.update(prospect.id, { status: "proposal_sent", contact_email: email });
+      await base44.entities.Prospect.update(prospect.id, { contact_email: email });
+      await base44.functions.invoke("sendProposalGmail", { prospectId: prospect.id });
       await onUpdated();
       setSent(true);
       setTimeout(() => { setSent(false); setOpen(false); }, 2000);
