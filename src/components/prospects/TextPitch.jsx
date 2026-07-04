@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { MessageSquare, Loader2, Copy, Check, Phone } from "lucide-react";
+import { appParams } from "@/lib/app-params";
 
 export default function TextPitch({ prospect, onUpdated }) {
   const [generating, setGenerating] = useState(false);
@@ -8,12 +9,17 @@ export default function TextPitch({ prospect, onUpdated }) {
 
   if (!prospect.phone) return null;
 
+  const demoUrl = prospect.demo_html
+    ? `https://base44.app/api/apps/${appParams.appId}/functions/viewDemo?pid=${prospect.id}`
+    : null;
+
   const generate = async () => {
     setGenerating(true);
     const sms = await base44.integrations.Core.InvokeLLM({
-      prompt: `Write a short, friendly text message (under 320 characters, no emojis) from Rey at REYTRINIDADco, an AI optimization consulting company, to ${prospect.business_name}, a ${prospect.industry || "local"} business in ${prospect.location || "their area"}. Their gaps: ${(prospect.gaps || []).join(", ")}. Mention one specific way AI or a modern website could help them, and end with a low-pressure question. Return only the text message.`
+      prompt: `Write a short, friendly text message (under 300 characters, no emojis) from Rey at REYTRINIDADco, an AI optimization consulting company, to ${prospect.business_name}, a ${prospect.industry || "local"} business in ${prospect.location || "their area"}. Their gaps: ${(prospect.gaps || []).join(", ")}. Mention one specific way AI or a modern website could help them.${demoUrl ? " End by saying you built them a free demo website they can check out at the link below (do NOT include any URL yourself)." : " End with a low-pressure question."} Return only the text message.`
     });
-    await base44.entities.Prospect.update(prospect.id, { sms_pitch: String(sms).trim() });
+    const pitch = String(sms).trim() + (demoUrl ? `\n\n${demoUrl}` : "");
+    await base44.entities.Prospect.update(prospect.id, { sms_pitch: pitch });
     await onUpdated();
     setGenerating(false);
   };
