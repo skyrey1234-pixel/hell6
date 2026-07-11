@@ -18,6 +18,8 @@ export default function TextPitch({ prospect, onUpdated }) {
     const sms = await base44.integrations.Core.InvokeLLM({
       prompt: `Write a short, confident, curiosity-driven text message (under 300 characters, no emojis) from Skyrey at REYTRINIDADco, an AI optimization consultant in Jacksonville FL, to ${prospect.business_name}, a ${prospect.industry || "local"} business in ${prospect.location || "their area"}. Their gaps: ${(prospect.gaps || []).join(", ")}.
 
+Background: I've built AI systems for Blackq Empire University, SellerSignal (real estate AI), Liza's Cleaning Co., and local law firms. I'm not a generic marketer — I'm an AI systems builder.
+
 Tone: "I researched your business and found a few places where you may be losing leads or repeat customers online. This is not a generic website pitch — I put together an AI business leak audit showing where your current system may be weak and how I'd fix it." Direct and sharp, never desperate or overly polite. Reference ONE specific leak from their gaps.${demoUrl ? " End by saying you also built them a free demo site they can check out at the link below (do NOT include any URL yourself)." : ' End with "Want me to send it over?"'} Return only the text message.`
     });
     const pitch = String(sms).trim() + (demoUrl ? `\n\n${demoUrl}` : "");

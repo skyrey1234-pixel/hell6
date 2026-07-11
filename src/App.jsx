@@ -19,6 +19,8 @@ import Pipeline from '@/pages/Pipeline';
 import Templates from '@/pages/Templates';
 import Reports from '@/pages/Reports';
 import Instagram from '@/pages/Instagram';
+import ArtistOutreach from '@/pages/ArtistOutreach';
+import FollowUps from '@/pages/FollowUps';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -58,6 +60,8 @@ const AuthenticatedApp = () => {
         <Route path="/templates" element={<Templates />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/instagram" element={<Instagram />} />
+        <Route path="/artist" element={<ArtistOutreach />} />
+        <Route path="/followups" element={<FollowUps />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

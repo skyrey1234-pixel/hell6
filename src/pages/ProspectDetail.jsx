@@ -10,6 +10,8 @@ import EnrichContact from "@/components/prospects/EnrichContact";
 import NotesSection from "@/components/prospects/NotesSection";
 import SendToClient from "@/components/prospects/SendToClient";
 import TextPitch from "@/components/prospects/TextPitch";
+import QuickPitch from "@/components/prospects/QuickPitch";
+import ContentIdeas from "@/components/prospects/ContentIdeas";
 
 export default function ProspectDetail() {
   const { id } = useParams();
@@ -68,11 +70,13 @@ export default function ProspectDetail() {
 
         {prospect.description && <p className="text-slate-300 leading-relaxed mb-8">{prospect.description}</p>}
 
+        <QuickPitch prospect={prospect} onUpdated={load} />
         <SendToClient prospect={prospect} onUpdated={load} />
         <TextPitch prospect={prospect} onUpdated={load} />
         <EnrichContact prospect={prospect} onUpdated={load} />
         <GapsOpportunities prospect={prospect} />
         <ProposalSection prospect={prospect} onUpdated={load} />
+        <ContentIdeas prospect={prospect} onUpdated={load} />
         <DemoSection prospect={prospect} onUpdated={load} />
         <NotesSection key={prospect.notes || "notes"} prospect={prospect} onUpdated={load} />
       </div>
