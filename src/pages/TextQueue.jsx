@@ -4,12 +4,28 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Loader2, Sparkles } from "lucide-react";
 import TextQueueItem from "@/components/prospects/TextQueueItem";
 import { generateSmsPitch } from "@/components/prospects/textQueuePitch";
+import { researchProspect } from "@/components/prospects/researchProspect";
+import { Search } from "lucide-react";
 
 export default function TextQueue() {
   const [prospects, setProspects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [bulkGenerating, setBulkGenerating] = useState(false);
   const [bulkProgress, setBulkProgress] = useState("");
+  const [researching, setResearching] = useState(false);
+  const [researchProgress, setResearchProgress] = useState("");
+
+  const researchAll = async () => {
+    setResearching(true);
+    const list = prospects;
+    for (let i = 0; i < list.length; i++) {
+      setResearchProgress(`${i + 1} of ${list.length}`);
+      await researchProspect(list[i]);
+    }
+    await load();
+    setResearching(false);
+    setResearchProgress("");
+  };
 
   const load = async () => {
     const data = await base44.entities.Prospect.list("-created_date", 200);
@@ -40,11 +56,18 @@ export default function TextQueue() {
         </Link>
         <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
           <h1 className="text-3xl font-bold tracking-tight">Text Queue</h1>
+          <div className="flex flex-wrap gap-2">
+          {prospects.length > 0 && (
+            <button onClick={researchAll} disabled={researching} className="flex items-center gap-1.5 text-xs font-semibold border border-amber-500/40 text-amber-400 hover:bg-amber-400/10 disabled:opacity-50 rounded-lg px-3 py-1.5 transition-colors">
+              {researching ? <><Loader2 className="w-3 h-3 animate-spin" /> Researching {researchProgress}…</> : <><Search className="w-3 h-3" /> Research all companies</>}
+            </button>
+          )}
           {missing.length > 0 && (
             <button onClick={generateAll} disabled={bulkGenerating} className="flex items-center gap-1.5 text-xs font-semibold bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-slate-950 rounded-lg px-3 py-1.5 transition-colors">
               {bulkGenerating ? <><Loader2 className="w-3 h-3 animate-spin" /> Writing {bulkProgress}…</> : <><Sparkles className="w-3 h-3" /> Generate {missing.length} missing pitches</>}
             </button>
           )}
+          </div>
         </div>
         <p className="text-slate-400 text-sm mb-8">Every prospect with a phone number. Tap "Text" to open your messaging app (set Google Voice as your default texting app) with the number and pitch pre-filled — then just hit send.</p>
 

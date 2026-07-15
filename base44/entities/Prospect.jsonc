@@ -59,6 +59,9 @@
     "demo_html": {
       "type": "string"
     },
+    "audit_html": {
+      "type": "string"
+    },
     "notes": {
       "type": "string"
     },
