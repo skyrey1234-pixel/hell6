@@ -5,7 +5,7 @@ import ProspectCard from "@/components/prospects/ProspectCard";
 import KanbanBoard from "@/components/prospects/KanbanBoard";
 import ProspectFilters from "@/components/prospects/ProspectFilters";
 import HitList from "@/components/prospects/HitList";
-import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3, Instagram as InstagramIcon, Music, Target, Clock, Zap } from "lucide-react";
+import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3, Instagram as InstagramIcon, Music, Target, Clock, Zap, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const FAITH_QUOTES = [
@@ -115,6 +115,9 @@ For each business provide: name, industry, full address, phone number if known, 
               </Link>
               <Link to="/followups" className="flex items-center gap-2 text-sm text-slate-300 hover:text-sky-400 border border-slate-700 hover:border-sky-500/40 rounded-xl px-4 py-2 transition-colors">
                 <Clock className="w-4 h-4" /> Follow-Ups
+              </Link>
+              <Link to="/textqueue" className="flex items-center gap-2 text-sm text-slate-300 hover:text-sky-400 border border-slate-700 hover:border-sky-500/40 rounded-xl px-4 py-2 transition-colors">
+                <MessageSquare className="w-4 h-4" /> Text Queue
               </Link>
               <Link to="/reports" className="flex items-center gap-2 text-sm text-slate-300 hover:text-amber-400 border border-slate-700 hover:border-amber-500/40 rounded-xl px-4 py-2 transition-colors">
                 <BarChart3 className="w-4 h-4" /> Reports
