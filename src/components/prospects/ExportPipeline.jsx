@@ -1,31 +1,28 @@
-import React from "react";
-import { Download } from "lucide-react";
-import { appParams } from "@/lib/app-params";
+import React, { useState } from "react";
+import { base44 } from "@/api/base44Client";
+import { Loader2, Sheet, ExternalLink } from "lucide-react";
 
-export default function ExportPipeline({ prospects }) {
-  const exportCsv = () => {
-    const headers = ["Business", "Phone", "Industry", "Location", "Address", "Website", "Score", "Status", "Demo Site", "Audit Link", "SMS Pitch"];
-    const base = `https://base44.app/api/apps/${appParams.appId}/functions`;
-    const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
-    const rows = prospects.map((p) => [
-      p.business_name, p.phone, p.industry, p.location, p.address, p.website,
-      p.opportunity_score, p.status,
-      p.demo_html ? `${base}/viewDemo?pid=${p.id}` : "",
-      p.audit_html ? `${base}/viewAudit?pid=${p.id}` : "",
-      p.sms_pitch
-    ].map(esc).join(","));
-    const csv = [headers.map(esc).join(","), ...rows].join("\n");
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "pipeline.csv";
-    link.click();
-    URL.revokeObjectURL(link.href);
+export default function ExportPipeline() {
+  const [syncing, setSyncing] = useState(false);
+  const [sheetUrl, setSheetUrl] = useState(null);
+
+  const sync = async () => {
+    setSyncing(true);
+    const res = await base44.functions.invoke("exportPipelineToSheet", {});
+    setSheetUrl(res.data.sheetUrl);
+    setSyncing(false);
   };
 
   return (
-    <button onClick={exportCsv} className="flex items-center gap-1.5 text-xs font-semibold border border-amber-500/40 text-amber-400 hover:bg-amber-400/10 rounded-lg px-3 py-1.5 transition-colors">
-      <Download className="w-3 h-3" /> Export to Excel
-    </button>
+    <div className="flex items-center gap-2">
+      <button onClick={sync} disabled={syncing} className="flex items-center gap-1.5 text-xs font-semibold border border-amber-500/40 text-amber-400 hover:bg-amber-400/10 disabled:opacity-50 rounded-lg px-3 py-1.5 transition-colors">
+        {syncing ? <><Loader2 className="w-3 h-3 animate-spin" /> Syncing…</> : <><Sheet className="w-3 h-3" /> Export to Google Drive</>}
+      </button>
+      {sheetUrl && (
+        <a href={sheetUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300">
+          Open sheet <ExternalLink className="w-3 h-3" />
+        </a>
+      )}
+    </div>
   );
 }
