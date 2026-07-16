@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import ProspectRow from "@/components/prospects/ProspectRow";
 import SendAllProposals from "@/components/prospects/SendAllProposals";
+import ExportPipeline from "@/components/prospects/ExportPipeline";
 import { ArrowLeft, KanbanSquare } from "lucide-react";
 
 export default function Pipeline() {
@@ -38,7 +39,10 @@ export default function Pipeline() {
             <KanbanSquare className="w-6 h-6 text-amber-400" />
             <h1 className="text-3xl font-bold tracking-tight">Prospect Pipeline</h1>
           </div>
-          <SendAllProposals prospects={prospects} onDone={load} />
+          <div className="flex flex-wrap items-center gap-2">
+            <ExportPipeline prospects={prospects} />
+            <SendAllProposals prospects={prospects} onDone={load} />
+          </div>
         </div>
 
         {loading ? (

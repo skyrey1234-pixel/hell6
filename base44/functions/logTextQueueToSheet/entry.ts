@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
       await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:append?valueInputOption=USER_ENTERED`, {
         method: 'POST',
         headers,
-        body: JSON.stringify({ values: [['Date Added', 'Company', 'Phone', 'Industry', 'Location', 'Address', 'Website', 'Opportunity Score', 'Top Gaps']] })
+        body: JSON.stringify({ values: [['Date Added', 'Company', 'Phone', 'Industry', 'Location', 'Address', 'Website', 'Opportunity Score', 'Top Gaps', 'SMS Pitch', 'Audit Link']] })
       });
       await base44.asServiceRole.entities.AppSetting.create({ key: 'text_queue_sheet_id', value: sheetId });
     }
@@ -53,7 +53,9 @@ Deno.serve(async (req) => {
           prospect.address || '',
           prospect.website || '',
           prospect.opportunity_score || '',
-          (prospect.gaps || []).slice(0, 3).join('; ')
+          (prospect.gaps || []).slice(0, 3).join('; '),
+          prospect.sms_pitch || '',
+          `https://base44.app/api/apps/${Deno.env.get('BASE44_APP_ID')}/functions/viewAudit?pid=${prospect.id || payload.event?.entity_id}`
         ]]
       })
     });
