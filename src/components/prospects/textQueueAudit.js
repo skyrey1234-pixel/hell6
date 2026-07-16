@@ -14,7 +14,7 @@ Business description: ${prospect.description || "n/a"}
 Their specific problems (the "leaks"): ${(prospect.gaps || []).join("; ") || "weak digital presence"}
 AI solutions that would fix them: ${(prospect.ai_opportunities || []).join("; ") || "AI chatbot, automated follow-up, review management"}
 
-The page must clearly explain, section by section: 1) each specific problem and exactly how it's costing them leads or money, 2) the exact AI fix Skyrey would build for it, 3) a closing call-to-action to text or call back to get started.
+The page must clearly explain, section by section: 1) each specific problem and exactly how it's costing them leads or money, 2) the exact AI fix Skyrey would build for it, 3) a closing call-to-action to get started — text or call Skyrey at (904) 330-4789, or email Thewayshop222@gmail.com. Display the phone number and email prominently in the call-to-action section, with the phone as a tap-to-text link (sms:9043304789) and the email as a mailto link.
 
 Style: dark professional theme (deep navy background, amber/gold accents), clean modern typography, mobile-friendly, feels like a premium consulting report. Return ONLY the raw HTML, no markdown fences.`
   });
