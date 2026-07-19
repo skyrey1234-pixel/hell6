@@ -49,9 +49,11 @@ Deno.serve(async (req) => {
 
     heading('Package 2 — Growth: $1,500-$2,000 setup + $100/mo maintenance');
     body('For businesses that want more — a bigger build with more AI features, with a lower monthly maintenance fee.');
+    body('ON-THE-SPOT DEAL: $750 deposit now, the rest when the work is done. Skyrey sends the invoice.');
 
     heading('Package 3 — Premium: $2,500 setup + $100/mo maintenance');
     body('Our best AI services. For businesses that want a custom app or anything else custom-built. Full AI systems tailored to exactly what they need.');
+    body('ON-THE-SPOT DEAL: $1,250 deposit now, $1,250 when the work is done. Skyrey sends the invoice.');
 
     heading('Closing');
     body('Once they pick a package, Skyrey handles the invoice, the build, and everything after. Your job is done at the yes.');
