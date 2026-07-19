@@ -56,7 +56,11 @@ Deno.serve(async (req) => {
     body('ON-THE-SPOT DEAL: $1,250 deposit now, $1,250 when the work is done. Skyrey sends the invoice.');
 
     heading('Closing');
-    body('Once they pick a package, Skyrey handles the invoice, the build, and everything after. Your job is done at the yes.');
+    body('Once they pick a package, Skyrey handles the invoice and the build. But your job is NOT done at the yes.');
+
+    heading('After the Yes: Keep Following Up');
+    body('Your job continues after the sale. Once the job is done, keep checking in with the client — ask how everything is running, if they\'re happy, and if there\'s anything else they need.');
+    body('Follow up regularly: a week after delivery, then monthly. Happy clients give referrals, leave reviews, and upgrade to bigger packages — which means more money for you. Staying in touch is how one sale turns into many.');
 
     const pdfBytes = new Uint8Array(doc.output('arraybuffer'));
     const file = new File([pdfBytes], 'REYTRINIDADco-Pitch-Pricing-Sheet.pdf', { type: 'application/pdf' });
