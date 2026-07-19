@@ -55,6 +55,10 @@ Deno.serve(async (req) => {
     body('Our best AI services. For businesses that want a custom app or anything else custom-built. Full AI systems tailored to exactly what they need.');
     body('ON-THE-SPOT DEAL: $1,250 deposit now, $1,250 when the work is done. Skyrey sends the invoice.');
 
+    heading('Your Cut: Half the Setup Fee');
+    body('Every deal you close, you get HALF of the setup fee. The monthly maintenance goes to Skyrey.');
+    body('Examples: Close a $1,000 Starter — you get $500. Close a $2,000 Growth — you get $1,000. Close a $2,500 Premium — you get $1,250. The bigger the package you sell, the bigger your cut.');
+
     heading('Closing');
     body('Once they pick a package, Skyrey handles the invoice and the build. But your job is NOT done at the yes.');
 
