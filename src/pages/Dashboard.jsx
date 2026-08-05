@@ -9,14 +9,14 @@ import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3
 import { Link } from "react-router-dom";
 
 const FAITH_QUOTES = [
-  "For I know the plans I have for you — plans to prosper you. — Jeremiah 29:11",
-  "Commit to the Lord whatever you do, and He will establish your plans. — Proverbs 16:3",
-  "The blessing of the Lord brings wealth, without painful toil for it. — Proverbs 10:22",
-  "Whatever you do, work at it with all your heart, as working for the Lord. — Colossians 3:23",
-  "Be strong and courageous. Do not be afraid; do not be discouraged. — Joshua 1:9",
-  "Trust in the Lord with all your heart and lean not on your own understanding. — Proverbs 3:5",
-  "The Lord will make you the head, not the tail. — Deuteronomy 28:13"
-];
+"For I know the plans I have for you — plans to prosper you. — Jeremiah 29:11",
+"Commit to the Lord whatever you do, and He will establish your plans. — Proverbs 16:3",
+"The blessing of the Lord brings wealth, without painful toil for it. — Proverbs 10:22",
+"Whatever you do, work at it with all your heart, as working for the Lord. — Colossians 3:23",
+"Be strong and courageous. Do not be afraid; do not be discouraged. — Joshua 1:9",
+"Trust in the Lord with all your heart and lean not on your own understanding. — Proverbs 3:5",
+"The Lord will make you the head, not the tail. — Deuteronomy 28:13"];
+
 
 export default function Dashboard() {
   const [prospects, setProspects] = useState([]);
@@ -29,12 +29,12 @@ export default function Dashboard() {
 
   const dailyQuote = FAITH_QUOTES[new Date().getDay()];
   const industries = [...new Set(prospects.map((p) => p.industry).filter(Boolean))].sort();
-  const visibleProspects = prospects
-    .filter((p) => industryFilter === "all" || p.industry === industryFilter)
-    .sort((a, b) => sortBy === "score" ? (b.opportunity_score || 0) - (a.opportunity_score || 0) : 0);
+  const visibleProspects = prospects.
+  filter((p) => industryFilter === "all" || p.industry === industryFilter).
+  sort((a, b) => sortBy === "score" ? (b.opportunity_score || 0) - (a.opportunity_score || 0) : 0);
 
   const handleStatusChange = async (id, status) => {
-    setProspects((prev) => prev.map((p) => (p.id === id ? { ...p, status } : p)));
+    setProspects((prev) => prev.map((p) => p.id === id ? { ...p, status } : p));
     await base44.entities.Prospect.update(id, { status });
   };
 
@@ -44,7 +44,7 @@ export default function Dashboard() {
     setLoading(false);
   };
 
-  useEffect(() => { loadProspects(); }, []);
+  useEffect(() => {loadProspects();}, []);
 
   const handleSearch = async ({ location, industry }) => {
     setSearching(true);
@@ -100,11 +100,11 @@ For each business provide: name, industry, full address, phone number if known, 
         <div className="mb-10">
           <div className="flex items-center justify-between mb-3 flex-wrap gap-3">
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 text-amber-400 text-sm font-bold tracking-widest uppercase">
+              <div className="flex items-center gap-2 text-amber-400 text-sm font-bold tracking-widest uppercase hidden">
                 <Sparkles className="w-4 h-4" /> REYTRINIDADco
               </div>
               <span className="text-slate-600 text-xs">|</span>
-              <span className="text-slate-500 text-xs">AI Optimization Consulting — Jacksonville, FL</span>
+              <span className="text-slate-500 text-xs">THE FINNESE GROUP LLC</span>
             </div>
             <div className="flex gap-2 flex-wrap">
               <Link to="/artist" className="flex items-center gap-2 text-sm text-slate-300 hover:text-purple-400 border border-slate-700 hover:border-purple-500/40 rounded-xl px-4 py-2 transition-colors">
@@ -143,66 +143,66 @@ For each business provide: name, industry, full address, phone number if known, 
         <div className="flex gap-2 mb-6">
           <button
             onClick={() => setTab("search")}
-            className={`flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors ${tab === "search" ? "bg-amber-400 text-slate-950" : "bg-[#131824] border border-slate-800 text-slate-300 hover:text-amber-400"}`}
-          >
+            className={`flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors ${tab === "search" ? "bg-amber-400 text-slate-950" : "bg-[#131824] border border-slate-800 text-slate-300 hover:text-amber-400"}`}>
+            
             <Zap className="w-4 h-4" /> AI Search
           </button>
           <button
             onClick={() => setTab("hitlist")}
-            className={`flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors ${tab === "hitlist" ? "bg-amber-400 text-slate-950" : "bg-[#131824] border border-slate-800 text-slate-300 hover:text-amber-400"}`}
-          >
+            className={`flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors ${tab === "hitlist" ? "bg-amber-400 text-slate-950" : "bg-[#131824] border border-slate-800 text-slate-300 hover:text-amber-400"}`}>
+            
             <Target className="w-4 h-4" /> My Hit List
           </button>
         </div>
 
-        {tab === "hitlist" ? (
-          <HitList onImport={loadProspects} />
-        ) : (
-          <>
+        {tab === "hitlist" ?
+        <HitList onImport={loadProspects} /> :
+
+        <>
             <SearchForm onSearch={handleSearch} searching={searching} />
-            {loading ? (
-              <div className="flex justify-center py-20">
+            {loading ?
+          <div className="flex justify-center py-20">
                 <div className="w-8 h-8 border-4 border-slate-700 border-t-amber-400 rounded-full animate-spin" />
-              </div>
-            ) : prospects.length === 0 ? (
-              <div className="text-center py-20 text-slate-500">No prospects yet — run a search above to find local businesses.</div>
-            ) : (
-              <div className="mt-10">
+              </div> :
+          prospects.length === 0 ?
+          <div className="text-center py-20 text-slate-500">No prospects yet — run a search above to find local businesses.</div> :
+
+          <div className="mt-10">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
                   <ProspectFilters
-                    industries={industries}
-                    industry={industryFilter}
-                    onIndustryChange={setIndustryFilter}
-                    sortBy={sortBy}
-                    onSortChange={setSortBy}
-                  />
+                industries={industries}
+                industry={industryFilter}
+                onIndustryChange={setIndustryFilter}
+                sortBy={sortBy}
+                onSortChange={setSortBy} />
+              
                   <div className="inline-flex border border-slate-700 rounded-xl overflow-hidden">
                     <button
-                      onClick={() => setView("cards")}
-                      className={`flex items-center gap-1.5 text-xs px-3 py-1.5 transition-colors ${view === "cards" ? "bg-amber-400 text-slate-950 font-semibold" : "text-slate-400 hover:text-slate-200"}`}
-                    >
+                  onClick={() => setView("cards")}
+                  className={`flex items-center gap-1.5 text-xs px-3 py-1.5 transition-colors ${view === "cards" ? "bg-amber-400 text-slate-950 font-semibold" : "text-slate-400 hover:text-slate-200"}`}>
+                  
                       <LayoutGrid className="w-3.5 h-3.5" /> Cards
                     </button>
                     <button
-                      onClick={() => setView("board")}
-                      className={`flex items-center gap-1.5 text-xs px-3 py-1.5 transition-colors ${view === "board" ? "bg-amber-400 text-slate-950 font-semibold" : "text-slate-400 hover:text-slate-200"}`}
-                    >
+                  onClick={() => setView("board")}
+                  className={`flex items-center gap-1.5 text-xs px-3 py-1.5 transition-colors ${view === "board" ? "bg-amber-400 text-slate-950 font-semibold" : "text-slate-400 hover:text-slate-200"}`}>
+                  
                       <Columns3 className="w-3.5 h-3.5" /> Board
                     </button>
                   </div>
                 </div>
-                {view === "cards" ? (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {view === "cards" ?
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {visibleProspects.map((p) => <ProspectCard key={p.id} prospect={p} />)}
-                  </div>
-                ) : (
-                  <KanbanBoard prospects={visibleProspects} onStatusChange={handleStatusChange} />
-                )}
+                  </div> :
+
+            <KanbanBoard prospects={visibleProspects} onStatusChange={handleStatusChange} />
+            }
               </div>
-            )}
+          }
           </>
-        )}
+        }
       </div>
-    </div>
-  );
+    </div>);
+
 }
