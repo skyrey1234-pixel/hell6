@@ -100,9 +100,9 @@ For each business provide: name, industry, full address, phone number if known, 
         <div className="mb-10">
           <div className="flex items-center justify-between mb-3 flex-wrap gap-3">
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 text-amber-400 text-sm font-bold tracking-widest uppercase hidden">
-                <Sparkles className="w-4 h-4" /> REYTRINIDADco
-              </div>
+              
+
+              
               <span className="text-slate-600 text-xs">|</span>
               <span className="text-slate-500 text-xs">THE FINNESE GROUP LLC</span>
             </div>
