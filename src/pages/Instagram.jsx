@@ -24,9 +24,9 @@ export default function Instagram() {
     setError(null);
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `Find 8 real, currently active Instagram accounts of small businesses or independent sellers in the "${niche}" niche${location ? ` based in or around ${location}` : ""}. Focus on accounts that are clearly trying to sell products or services (shops, creators, local businesses) and would benefit from better marketing, a website, or AI tools.
+        prompt: `Find 8 real, currently active Instagram accounts of real estate professionals in the "${niche}" niche${location ? ` based in or around ${location}` : ""} — realtors, real estate agents, brokerages, real estate teams, property managers, investors, or house flippers. Focus on accounts that are clearly working to win listings and buyer/seller leads and would benefit from better marketing, a lead-capture website, or AI tools (lead qualification, follow-up automation, listing content).
 
-For each account provide: the Instagram handle (without @), display name, a short bio summary, approximate follower count as text (e.g. "12K"), what they sell, and their location if known. Only include accounts you have real evidence exist — do not invent handles.`,
+For each account provide: the Instagram handle (without @), display name, a short bio summary, approximate follower count as text (e.g. "12K"), what they sell/do (e.g. "residential listings in Jax Beach"), and their location if known. Only include accounts you have real evidence exist — do not invent handles.`,
         add_context_from_internet: true,
         model: "gemini_3_flash",
         response_json_schema: {
@@ -84,7 +84,7 @@ For each account provide: the Instagram handle (without @), display name, a shor
           <InstagramIcon className="w-7 h-7 text-pink-400" /> Instagram Leads
         </h1>
         <p className="text-sm text-slate-400 mb-8">
-          Find sellers and creators on Instagram you can market to, then generate a personalized DM to send them.
+          Find realtors and real estate pros on Instagram you can market to, then generate a personalized DM to send them.
         </p>
 
         <IGSearchForm onSearch={search} searching={searching} />
@@ -95,7 +95,7 @@ For each account provide: the Instagram handle (without @), display name, a shor
             <div className="w-8 h-8 border-4 border-slate-700 border-t-pink-400 rounded-full animate-spin" />
           </div>
         ) : leads.length === 0 ? (
-          <p className="text-center py-16 text-slate-500 text-sm">No Instagram leads yet — search a niche above to find accounts to reach out to.</p>
+          <p className="text-center py-16 text-slate-500 text-sm">No Instagram leads yet — search a real estate niche above to find agents to reach out to.</p>
         ) : (
           <div className="space-y-4">
             {leads.map((lead) => <IGLeadCard key={lead.id} lead={lead} onUpdated={load} />)}

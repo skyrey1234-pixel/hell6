@@ -22,7 +22,7 @@ export default function SearchForm({ onSearch, searching }) {
       <input
         value={industry}
         onChange={(e) => setIndustry(e.target.value)}
-        placeholder="Industry (optional — e.g. dental, restaurants)"
+        placeholder="Type (optional — e.g. solo realtors, brokerages, property managers)"
         className="flex-1 bg-[#0B0E14] border border-slate-800 rounded-xl px-4 py-3 text-sm placeholder:text-slate-600 focus:outline-none focus:border-amber-500/50 transition-colors"
       />
       <button
@@ -30,7 +30,7 @@ export default function SearchForm({ onSearch, searching }) {
         disabled={searching || !location.trim()}
         className="flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-slate-950 font-semibold rounded-xl px-6 py-3 text-sm transition-colors"
       >
-        {searching ? <><Loader2 className="w-4 h-4 animate-spin" /> Scouting businesses…</> : <><Search className="w-4 h-4" /> Find Prospects</>}
+        {searching ? <><Loader2 className="w-4 h-4 animate-spin" /> Scouting realtors…</> : <><Search className="w-4 h-4" /> Find Prospects</>}
       </button>
     </form>
   );

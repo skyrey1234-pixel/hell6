@@ -15,7 +15,7 @@ export default function IGSearchForm({ onSearch, searching }) {
       <input
         value={niche}
         onChange={(e) => setNiche(e.target.value)}
-        placeholder="Niche (e.g. handmade jewelry, fitness coaches, food trucks)"
+        placeholder="Niche (e.g. luxury realtors, first-time buyer agents, house flippers)"
         className="flex-1 min-w-[220px] bg-[#0B0E14] border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-pink-500/50"
       />
       <input
@@ -31,7 +31,7 @@ export default function IGSearchForm({ onSearch, searching }) {
       >
         {searching ? <><Loader2 className="w-4 h-4 animate-spin" /> Searching…</> : <><Search className="w-4 h-4" /> Find Accounts</>}
       </button>
-      {searching && <span className="w-full text-xs text-slate-500">Searching Instagram for active sellers in this niche — takes about 20 seconds.</span>}
+      {searching && <span className="w-full text-xs text-slate-500">Searching Instagram for active real estate pros in this niche — takes about 20 seconds.</span>}
     </form>
   );
 }

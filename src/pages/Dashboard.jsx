@@ -49,8 +49,8 @@ export default function Dashboard() {
   const handleSearch = async ({ location, industry }) => {
     setSearching(true);
     const result = await base44.integrations.Core.InvokeLLM({
-      prompt: `Find 6 real local small-to-medium businesses in ${location}${industry ? ` in the ${industry} industry` : " across various industries"} that would be strong candidates for AI optimization consulting services from REYTRINIDADco. Prefer businesses with weak or no digital presence, outdated websites, or manual processes that are clearly losing leads or money.
-For each business provide: name, industry, full address, phone number if known, website URL if they have one (empty string if not), a 2-3 sentence description of the company, a list of 3-5 specific things they are lacking (e.g. no online booking, outdated website, no chatbot, manual scheduling, no review management, no follow-up system), a list of 3-5 specific AI solutions that could help them (be concrete, e.g. "AI chatbot for appointment booking", "automated review response system", "AI voice receptionist for missed calls"), and an opportunity score from 1-100 rating how good a consulting prospect they are.`,
+      prompt: `Find 6 real, currently active real estate professionals or businesses in ${location}${industry ? ` — specifically: ${industry}` : " — realtors, real estate agents, brokerages, real estate teams, property managers, or investors who buy/sell houses"} that would be strong candidates for AI optimization consulting services from REYTRINIDADco. Use their REAL information (real names, real brokerage/team names, real addresses, real phone numbers, real websites). Prefer agents and brokerages with weak or outdated websites, no lead capture, slow follow-up, few reviews, or manual processes that are clearly losing them listings and buyer leads.
+For each provide: name (the agent's or brokerage's real name), industry (e.g. "Realtor", "Brokerage", "Property Management"), full address, phone number if known, website URL if they have one (empty string if not), a 2-3 sentence description of what they do and their market, a list of 3-5 specific things they are lacking (e.g. no instant lead follow-up, no home valuation tool on site, outdated listing website, no AI chatbot to qualify buyers, no review management, missed calls from buyers/sellers, no automated open-house follow-up), a list of 3-5 specific AI solutions matched to real estate (be concrete, e.g. "AI chatbot that qualifies buyer leads 24/7", "instant home-valuation lead magnet", "AI voice receptionist for missed buyer calls", "automated listing follow-up sequences", "AI-generated listing descriptions and social content"), and an opportunity score from 1-100 rating how good a consulting prospect they are.`,
       add_context_from_internet: true,
       response_json_schema: {
         type: "object",
@@ -130,8 +130,8 @@ For each business provide: name, industry, full address, phone number if known, 
               </Link>
             </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Find your next client.</h1>
-          <p className="text-slate-400 mt-3 max-w-xl">Discover local businesses that need AI optimization, see exactly what they're lacking, and generate proposals and demos in one click.</p>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Find your next realtor client.</h1>
+          <p className="text-slate-400 mt-3 max-w-xl">Discover realtors, brokerages, and property managers who are losing buyer and seller leads, see exactly what they're lacking, and generate proposals and demos in one click.</p>
 
           {/* Daily faith quote */}
           <div className="mt-4 bg-amber-400/5 border border-amber-500/20 rounded-xl px-4 py-3">
@@ -165,7 +165,7 @@ For each business provide: name, industry, full address, phone number if known, 
                 <div className="w-8 h-8 border-4 border-slate-700 border-t-amber-400 rounded-full animate-spin" />
               </div> :
           prospects.length === 0 ?
-          <div className="text-center py-20 text-slate-500">No prospects yet — run a search above to find local businesses.</div> :
+          <div className="text-center py-20 text-slate-500">No prospects yet — run a search above to find realtors and real estate businesses.</div> :
 
           <div className="mt-10">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
