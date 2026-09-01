@@ -1,0 +1,37 @@
+{
+  "name": "Jacksonville Text Queue \u2192 Google Sheet",
+  "description": "Logs every new prospect with a phone number in Jacksonville, FL to a Google Sheet in the user's Drive.",
+  "trigger": {
+    "condition": "${ (.trigger.data.phone != null and .trigger.data.phone != \"\" and .trigger.data.phone != [] and .trigger.data.phone != {}) }",
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "Prospect"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "jacksonville_text_queue_google_sheet",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "logTextQueueToSheet",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "logTextQueueToSheet"
+  }
+}
