@@ -1,0 +1,50 @@
+{
+  "name": "ArtistLead",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "lead_type": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "instagram": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "pitch_angle": {
+      "type": "string"
+    },
+    "pitch": {
+      "type": "string"
+    },
+    "genre": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "replied",
+        "booked",
+        "passed"
+      ],
+      "default": "new"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
