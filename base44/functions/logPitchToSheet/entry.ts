@@ -19,7 +19,7 @@ Deno.serve(async (req) => {
       const createRes = await fetch('https://sheets.googleapis.com/v4/spreadsheets', {
         method: 'POST',
         headers,
-        body: JSON.stringify({ properties: { title: 'REYTRINIDADco Jacksonville Text Queue' } })
+        body: JSON.stringify({ properties: { title: 'The Finnese Group Jacksonville Text Queue' } })
       });
       const created = await createRes.json();
       if (!createRes.ok) throw new Error(JSON.stringify(created));

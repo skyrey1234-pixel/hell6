@@ -11,9 +11,9 @@ export default function QuickPitch({ prospect, onUpdated }) {
   const generate = async () => {
     setGenerating(true);
     const pitch = await base44.integrations.Core.InvokeLLM({
-      prompt: `Write a short, high-converting cold email (under 150 words) from Skyrey at REYTRINIDADco to ${prospect.business_name} (${prospect.industry} in ${prospect.location}).
+      prompt: `Write a short, high-converting cold email (under 150 words) from Skyrey at The Finnese Group (skyreyport.com) to ${prospect.business_name} (${prospect.industry} in ${prospect.location}).
 
-Context: I'm an AI optimization consultant in Jacksonville, FL. I've built AI systems for businesses like Blackq Empire University, SellerSignal (real estate AI), Liza's Cleaning Co., and local law firms. I specialize in AI chatbots, voice receptionists, automated follow-up systems, and lead capture automation.
+Context: I'm Skyler Rey Trinidad (Skyrey), an AI optimization consultant & product systems builder at The Finnese Group LLC in Jacksonville, FL (portfolio: skyreyport.com — 24 documented case files including Real Estate Wealth Engine, Business Operator Dashboard, Property Discovery & Underwriting Prototype, Ghost Listing Predictor, SellerSignal AI, TacticalEdge Soccer AI, LiveEdge AI, CraveMatch AI, and Northstar Acquisition System). I build AI lead capture, voice receptionists, operator dashboards, and automated follow-up systems.
 
 Their known gaps: ${(prospect.gaps || []).join(", ")}
 
@@ -21,9 +21,9 @@ Rules:
 - Subject line first (compelling, not clickbait)
 - Opening line must reference something specific about their business
 - Mention ONE specific gap and the money it's costing them
-- Offer a free "AI Business Leak Audit" — no strings attached
+- Offer a free "AI Business Leak Audit" — no strings attached, and mention they can see my verified builds at skyreyport.com
 - Tone: confident, direct, not desperate. Like a peer who noticed something, not a salesman begging for time.
-- Sign off as "Skyrey — REYTRINIDADco"
+- Sign off as "Skyrey — The Finnese Group | skyreyport.com"
 - Do NOT include pricing or long explanations
 - This is a first touch — curiosity only
 

@@ -31,11 +31,11 @@ Deno.serve(async (req) => {
 
     doc.setFontSize(20);
     doc.setFont(undefined, 'bold');
-    doc.text('REYTRINIDADco Partner Guide', left, y);
+    doc.text('The Finnese Group Partner Guide', left, y);
     y += 8;
     doc.setFontSize(10);
     doc.setFont(undefined, 'normal');
-    doc.text('Skyrey · Jacksonville, FL · (904) 330-4789 · Thewayshop222@gmail.com', left, y);
+    doc.text('Skyrey · The Finnese Group LLC · Jacksonville, FL · (904) 330-4789 · Thewayshop222@gmail.com · skyreyport.com', left, y);
     y += 12;
 
     heading('Your Job: Get the Yes to the Audit');
@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
     body('A single standard client is worth roughly $360-$410 to you over 6 months. Commission-only until you consistently bring 2+ closed deals a month, then we revisit.');
 
     const pdfBytes = new Uint8Array(doc.output('arraybuffer'));
-    const file = new File([pdfBytes], 'REYTRINIDADco-Partner-Guide.pdf', { type: 'application/pdf' });
+    const file = new File([pdfBytes], 'The-Finnese-Group-Partner-Guide.pdf', { type: 'application/pdf' });
     const { file_url } = await base44.asServiceRole.integrations.Core.UploadFile({ file });
     return Response.json({ file_url });
   } catch (error) {

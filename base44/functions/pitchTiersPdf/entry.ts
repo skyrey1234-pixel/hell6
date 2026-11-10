@@ -32,11 +32,11 @@ Deno.serve(async (req) => {
 
     doc.setFontSize(20);
     doc.setFont(undefined, 'bold');
-    doc.text('REYTRINIDADco Pitch & Pricing Sheet', left, y);
+    doc.text('The Finnese Group Pitch & Pricing Sheet', left, y);
     y += 8;
     doc.setFontSize(10);
     doc.setFont(undefined, 'normal');
-    doc.text('Skyrey · Jacksonville, FL · (904) 330-4789 · Thewayshop222@gmail.com', left, y);
+    doc.text('Skyrey · The Finnese Group LLC · Jacksonville, FL · (904) 330-4789 · Thewayshop222@gmail.com · skyreyport.com', left, y);
     y += 12;
 
     heading('Step 1: Ask, Don\'t Pitch');
@@ -67,7 +67,7 @@ Deno.serve(async (req) => {
     body('Follow up regularly: a week after delivery, then monthly. Happy clients give referrals, leave reviews, and upgrade to bigger packages — which means more money for you. Staying in touch is how one sale turns into many.');
 
     const pdfBytes = new Uint8Array(doc.output('arraybuffer'));
-    const file = new File([pdfBytes], 'REYTRINIDADco-Pitch-Pricing-Sheet.pdf', { type: 'application/pdf' });
+    const file = new File([pdfBytes], 'The-Finnese-Group-Pitch-Pricing-Sheet.pdf', { type: 'application/pdf' });
     const { file_url } = await base44.asServiceRole.integrations.Core.UploadFile({ file });
     return Response.json({ file_url });
   } catch (error) {

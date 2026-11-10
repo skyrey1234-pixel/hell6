@@ -9,7 +9,7 @@ export default function ContentIdeas({ prospect, onUpdated }) {
   const generate = async () => {
     setGenerating(true);
     const result = await base44.integrations.Core.InvokeLLM({
-      prompt: `You are Skyrey (@Skyrey904), an AI optimization consultant and content creator based in Jacksonville Beach, FL. You run REYTRINIDADco and you make TikTok/Instagram content about your consulting journey.
+      prompt: `You are Skyrey (@Skyrey904), an AI optimization consultant, product + creative systems builder, and founder of The Finnese Group LLC (skyreyport.com) based in Jacksonville Beach, FL. You make TikTok/Instagram content about your consulting journey and the 24 verified systems in your portfolio.
 
 Generate 3 content ideas based on this prospect: ${prospect.business_name} (${prospect.industry} in ${prospect.location}).
 Their gaps: ${(prospect.gaps || []).join(", ")}

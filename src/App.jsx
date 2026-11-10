@@ -20,6 +20,7 @@ import Instagram from '@/pages/Instagram';
 import ArtistOutreach from '@/pages/ArtistOutreach';
 import FollowUps from '@/pages/FollowUps';
 import TextQueue from '@/pages/TextQueue';
+import Portfolio from '@/pages/Portfolio';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -61,6 +62,7 @@ const AuthenticatedApp = () => {
       <Route path="/artist" element={<ArtistOutreach />} />
       <Route path="/followups" element={<FollowUps />} />
       <Route path="/textqueue" element={<TextQueue />} />
+      <Route path="/portfolio" element={<Portfolio />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

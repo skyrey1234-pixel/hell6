@@ -17,7 +17,7 @@ export default function IGLeadCard({ lead, onUpdated }) {
   const generateDM = async () => {
     setGenerating(true);
     const dm = await base44.integrations.Core.InvokeLLM({
-      prompt: `Write a short, confident, curiosity-driven Instagram DM (under 500 characters, no hashtags, max 1 emoji) from Skyrey at REYTRINIDADco, an AI optimization consultant in Jacksonville FL, to @${lead.handle} (${lead.display_name}). They sell: ${lead.what_they_sell}. Bio: ${lead.bio}
+      prompt: `Write a short, confident, curiosity-driven Instagram DM (under 500 characters, no hashtags, max 1 emoji) from Skyrey at The Finnese Group (skyreyport.com), an AI optimization consultant & systems builder in Jacksonville FL, to @${lead.handle} (${lead.display_name}). They sell: ${lead.what_they_sell}. Bio: ${lead.bio}
 
 Tone: "I checked out your page and found a few places where you may be losing sales or repeat customers — not a generic pitch, I put together a quick AI business leak audit showing where your current setup may be weak and how I'd fix it." Direct and sharp, never desperate or overly polite. Reference something specific about what they sell so it feels researched, name ONE likely leak (no booking/order flow in bio, no follow-up system, attention not converting to sales, etc.), and end with "Want me to send it over?" Return only the DM text.`
     });

@@ -9,9 +9,9 @@ Deno.serve(async (req) => {
 
     const doc = new jsPDF();
     doc.setFontSize(20);
-    doc.text('REYTRINIDADco Pricing Guide', 14, 20);
+    doc.text('The Finnese Group Pricing Guide', 14, 20);
     doc.setFontSize(10);
-    doc.text('Skyrey · Jacksonville, FL · (904) 330-4789 · Thewayshop222@gmail.com', 14, 28);
+    doc.text('Skyrey · The Finnese Group LLC · Jacksonville, FL · (904) 330-4789 · Thewayshop222@gmail.com · skyreyport.com', 14, 28);
 
     const items = [
       ['AI-Enhanced Website Build (one-time)', '$1,500 - $3,500', 'Businesses with no or outdated site'],
@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
     doc.text('never go below $150/mo for anything ongoing.', 14, y + 5);
 
     const pdfBytes = new Uint8Array(doc.output('arraybuffer'));
-    const file = new File([pdfBytes], 'REYTRINIDADco-Pricing-Guide.pdf', { type: 'application/pdf' });
+    const file = new File([pdfBytes], 'The-Finnese-Group-Pricing-Guide.pdf', { type: 'application/pdf' });
     const { file_url } = await base44.asServiceRole.integrations.Core.UploadFile({ file });
     return Response.json({ file_url });
   } catch (error) {

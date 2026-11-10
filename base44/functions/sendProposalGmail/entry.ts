@@ -2,9 +2,9 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import { createMimeMessage } from 'npm:mimetext@3.0.24';
 import { marked } from 'npm:marked@12.0.2';
 
-const LOGO_URL = 'https://media.base44.com/images/public/6a4874ff15694fac2c53ae2f/568856756_logoooooooooo.png';
-const PORTFOLIO_URL = 'https://skyreyport-pgwsqsg8.manus.space/';
-const COMPANY_NAME = 'REYTRINIDADco';
+const LOGO_URL = 'https://skyreyport.com/manus-storage/skyrey-evidence-mark_eee54882.png';
+const PORTFOLIO_URL = 'https://skyreyport.com';
+const COMPANY_NAME = 'The Finnese Group';
 
 Deno.serve(async (req) => {
   try {
@@ -118,7 +118,7 @@ Deno.serve(async (req) => {
         const createRes = await fetch('https://sheets.googleapis.com/v4/spreadsheets', {
           method: 'POST',
           headers: sheetsHeaders,
-          body: JSON.stringify({ properties: { title: 'REYTRINIDADco Proposal Log' } })
+          body: JSON.stringify({ properties: { title: 'The Finnese Group Proposal Log' } })
         });
         const created = await createRes.json();
         if (!createRes.ok) throw new Error(JSON.stringify(created));

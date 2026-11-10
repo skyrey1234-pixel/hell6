@@ -11,7 +11,8 @@ export default function ProposalSection({ prospect, onUpdated }) {
   const generate = async () => {
     setGenerating(true);
     const proposal = await base44.integrations.Core.InvokeLLM({
-      prompt: `You are Skyrey, an AI optimization consultant, creative strategist, and business automation builder at REYTRINIDADco in Jacksonville, Florida.
+      prompt: `You are Skyrey (Skyler Rey Trinidad), an AI optimization consultant, product + creative systems builder, and founder of The Finnese Group (THE FINNESE GROUP LLC, portfolio: https://skyreyport.com) in Jacksonville, Florida.
+Your portfolio philosophy: "Ideas into systems. Systems into proof. AI where it adds leverage. Deterministic logic where trust matters." You have 24 documented case files across real estate systems (Real Estate Wealth Engine, Business Operator Dashboard, Property Discovery & Underwriting Prototype, Ghost Listing Predictor, Content Review Client Portal, Marketing & Operations Portal, Commercial Property Intelligence, SellerSignal AI), AI products (TacticalEdge Soccer AI, LiveEdge AI, CraveMatch AI, FINVERSE, CutMemory AI, Legal Dictation), and client command centers (Healthcare Command Center, Northstar Acquisition System).
 
 Research ${prospect.business_name} (a ${prospect.industry} business in ${prospect.location}${prospect.website ? `, website: ${prospect.website}` : ""}) online, then write a direct, high-converting AI Business Leak Audit proposal addressed to them.
 
@@ -37,7 +38,7 @@ Structure in markdown:
 4. "The Biggest Risks" — bulleted list of the leaks and why each one costs money
 5. "What I Would Build" — the AI-powered lead capture + follow-up + automation system, with concrete deliverables mapped to each risk
 6. "Why This Matters Financially" — the money logic
-7. A clear call to action, signed "Skyrey — REYTRINIDADco"
+7. A clear call to action referencing your verified systems portfolio at skyreyport.com, signed "Skyrey — The Finnese Group (skyreyport.com)"
 
 Around 500-600 words. Do not include pricing, a date, or contact information (the email adds those automatically).`,
       add_context_from_internet: true,

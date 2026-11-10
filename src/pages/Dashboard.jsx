@@ -5,7 +5,7 @@ import ProspectCard from "@/components/prospects/ProspectCard";
 import KanbanBoard from "@/components/prospects/KanbanBoard";
 import ProspectFilters from "@/components/prospects/ProspectFilters";
 import HitList from "@/components/prospects/HitList";
-import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3, Instagram as InstagramIcon, Music, Target, Clock, Zap, MessageSquare } from "lucide-react";
+import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3, Instagram as InstagramIcon, Music, Target, Clock, Zap, MessageSquare, Briefcase, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const FAITH_QUOTES = [
@@ -49,7 +49,7 @@ export default function Dashboard() {
   const handleSearch = async ({ location, industry }) => {
     setSearching(true);
     const result = await base44.integrations.Core.InvokeLLM({
-      prompt: `Find 6 real, currently active real estate professionals or businesses in ${location}${industry ? ` — specifically: ${industry}` : " — realtors, real estate agents, brokerages, real estate teams, property managers, or investors who buy/sell houses"} that would be strong candidates for AI optimization consulting services from REYTRINIDADco. Use their REAL information (real names, real brokerage/team names, real addresses, real phone numbers, real websites). Prefer agents and brokerages with weak or outdated websites, no lead capture, slow follow-up, few reviews, or manual processes that are clearly losing them listings and buyer leads.
+      prompt: `Find 6 real, currently active real estate professionals or businesses in ${location}${industry ? ` — specifically: ${industry}` : " — realtors, real estate agents, brokerages, real estate teams, property managers, or investors who buy/sell houses"} that would be strong candidates for AI optimization consulting services from The Finnese Group (THE FINNESE GROUP LLC, skyreyport.com). Use their REAL information (real names, real brokerage/team names, real addresses, real phone numbers, real websites). Prefer agents and brokerages with weak or outdated websites, no lead capture, slow follow-up, few reviews, or manual processes that are clearly losing them listings and buyer leads.
 For each provide: name (the agent's or brokerage's real name), industry (e.g. "Realtor", "Brokerage", "Property Management"), full address, phone number if known, website URL if they have one (empty string if not), a 2-3 sentence description of what they do and their market, a list of 3-5 specific things they are lacking (e.g. no instant lead follow-up, no home valuation tool on site, outdated listing website, no AI chatbot to qualify buyers, no review management, missed calls from buyers/sellers, no automated open-house follow-up), a list of 3-5 specific AI solutions matched to real estate (be concrete, e.g. "AI chatbot that qualifies buyer leads 24/7", "instant home-valuation lead magnet", "AI voice receptionist for missed buyer calls", "automated listing follow-up sequences", "AI-generated listing descriptions and social content"), and an opportunity score from 1-100 rating how good a consulting prospect they are.`,
       add_context_from_internet: true,
       response_json_schema: {
@@ -96,17 +96,30 @@ For each provide: name (the agent's or brokerage's real name), industry (e.g. "R
   return (
     <div className="min-h-screen bg-[#0B0E14] text-slate-100">
       <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Header with REYTRINIDADco branding */}
+        {/* Header with The Finnese Group & Skyrey portfolio branding */}
         <div className="mb-10">
           <div className="flex items-center justify-between mb-3 flex-wrap gap-3">
-            <div className="flex items-center gap-2">
-              
-
-              
-              <span className="text-slate-600 text-xs">|</span>
-              <span className="text-slate-500 text-xs">THE FINNESE GROUP LLC</span>
+            <div className="flex items-center gap-2.5">
+              <img
+                src="https://skyreyport.com/manus-storage/skyrey-evidence-mark_eee54882.png"
+                alt="Skyrey Evidence Mark"
+                className="w-7 h-7 rounded-md object-contain"
+              />
+              <span className="text-amber-400 font-bold tracking-wider text-xs uppercase">THE FINNESE GROUP LLC</span>
+              <span className="text-slate-600 text-xs">·</span>
+              <a
+                href="https://skyreyport.com"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-amber-400 transition-colors"
+              >
+                skyreyport.com <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
             <div className="flex gap-2 flex-wrap">
+              <Link to="/portfolio" className="flex items-center gap-2 text-sm text-amber-400 hover:text-amber-300 border border-amber-500/40 bg-amber-400/5 rounded-xl px-4 py-2 transition-colors">
+                <Briefcase className="w-4 h-4" /> Portfolio (24)
+              </Link>
               <Link to="/artist" className="flex items-center gap-2 text-sm text-slate-300 hover:text-purple-400 border border-slate-700 hover:border-purple-500/40 rounded-xl px-4 py-2 transition-colors">
                 <Music className="w-4 h-4" /> Artist
               </Link>
