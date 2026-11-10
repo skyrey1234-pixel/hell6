@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
-import { ArrowLeft, Globe, Phone, MapPin } from "lucide-react";
+import { ArrowLeft, Globe, Phone, MapPin, Building2 } from "lucide-react";
 import StatusBadge from "@/components/prospects/StatusBadge";
 import GapsOpportunities from "@/components/prospects/GapsOpportunities";
 import ProposalSection from "@/components/prospects/ProposalSection";
@@ -40,9 +40,17 @@ export default function ProspectDetail() {
   return (
     <div className="min-h-screen bg-[#0B0E14] text-slate-100">
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-amber-400 transition-colors mb-8">
-          <ArrowLeft className="w-4 h-4" /> All prospects
-        </Link>
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
+          <Link to="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-amber-400 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> All prospects
+          </Link>
+          <Link
+            to="/realtor-leads"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 border border-emerald-500/40 bg-emerald-400/5 rounded-xl px-3.5 py-2 transition-colors"
+          >
+            <Building2 className="w-3.5 h-3.5" /> Realtor Leads Dashboard
+          </Link>
+        </div>
 
         <div className="flex flex-wrap items-start justify-between gap-4 mb-2">
           <div>

@@ -5,7 +5,8 @@ import ProspectCard from "@/components/prospects/ProspectCard";
 import KanbanBoard from "@/components/prospects/KanbanBoard";
 import ProspectFilters from "@/components/prospects/ProspectFilters";
 import HitList from "@/components/prospects/HitList";
-import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3, Instagram as InstagramIcon, Music, Target, Clock, Zap, MessageSquare, Briefcase, ExternalLink } from "lucide-react";
+import RealtorLeads from "@/pages/RealtorLeads";
+import { Sparkles, KanbanSquare, LayoutGrid, Columns3, LayoutTemplate, BarChart3, Instagram as InstagramIcon, Music, Target, Clock, Zap, MessageSquare, Briefcase, ExternalLink, Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const FAITH_QUOTES = [
@@ -117,6 +118,9 @@ For each provide: name (the agent's or brokerage's real name), industry (e.g. "R
               </a>
             </div>
             <div className="flex gap-2 flex-wrap">
+              <Link to="/realtor-leads" className="flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 border border-emerald-500/40 bg-emerald-400/5 rounded-xl px-4 py-2 transition-colors">
+                <Building2 className="w-4 h-4" /> Realtor Leads
+              </Link>
               <Link to="/portfolio" className="flex items-center gap-2 text-sm text-amber-400 hover:text-amber-300 border border-amber-500/40 bg-amber-400/5 rounded-xl px-4 py-2 transition-colors">
                 <Briefcase className="w-4 h-4" /> Portfolio (24)
               </Link>
@@ -152,23 +156,28 @@ For each provide: name (the agent's or brokerage's real name), industry (e.g. "R
           </div>
         </div>
 
-        {/* Tab switcher: Search vs Hit List */}
-        <div className="flex gap-2 mb-6">
+        {/* Tab switcher: Search vs Realtor Command Center vs Hit List */}
+        <div className="flex flex-wrap gap-2 mb-6">
           <button
             onClick={() => setTab("search")}
             className={`flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors ${tab === "search" ? "bg-amber-400 text-slate-950" : "bg-[#131824] border border-slate-800 text-slate-300 hover:text-amber-400"}`}>
-            
             <Zap className="w-4 h-4" /> AI Search
+          </button>
+          <button
+            onClick={() => setTab("realtors")}
+            className={`flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors ${tab === "realtors" ? "bg-amber-400 text-slate-950" : "bg-[#131824] border border-slate-800 text-slate-300 hover:text-amber-400"}`}>
+            <Building2 className="w-4 h-4" /> Realtor Leads View
           </button>
           <button
             onClick={() => setTab("hitlist")}
             className={`flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors ${tab === "hitlist" ? "bg-amber-400 text-slate-950" : "bg-[#131824] border border-slate-800 text-slate-300 hover:text-amber-400"}`}>
-            
             <Target className="w-4 h-4" /> My Hit List
           </button>
         </div>
 
-        {tab === "hitlist" ?
+        {tab === "realtors" ? (
+          <RealtorLeads embedded />
+        ) : tab === "hitlist" ?
         <HitList onImport={loadProspects} /> :
 
         <>

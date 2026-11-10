@@ -21,6 +21,7 @@ import ArtistOutreach from '@/pages/ArtistOutreach';
 import FollowUps from '@/pages/FollowUps';
 import TextQueue from '@/pages/TextQueue';
 import Portfolio from '@/pages/Portfolio';
+import RealtorLeads from '@/pages/RealtorLeads';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -63,6 +64,7 @@ const AuthenticatedApp = () => {
       <Route path="/followups" element={<FollowUps />} />
       <Route path="/textqueue" element={<TextQueue />} />
       <Route path="/portfolio" element={<Portfolio />} />
+      <Route path="/realtor-leads" element={<RealtorLeads />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

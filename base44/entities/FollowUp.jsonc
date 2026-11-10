@@ -1,0 +1,90 @@
+{
+  "name": "FollowUp",
+  "type": "object",
+  "properties": {
+    "prospect_id": {
+      "type": "string"
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "follow_up_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "follow_up_type": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "intention": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "done"
+      ],
+      "enumColors": [
+        "yellow",
+        "green"
+      ],
+      "default": "pending"
+    }
+  },
+  "required": [
+    "follow_up_date"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
